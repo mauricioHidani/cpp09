@@ -1,0 +1,9 @@
+# Directory
+.brainStorage/
+.vscode/
+
+# Files
+*.out
+*.log
+exec.out
+merge
