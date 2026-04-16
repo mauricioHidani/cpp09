@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mhidani <mhidani@student.42.fr>            +#+  +:+       +#+         #
+#    By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/12 11:45:05 by mhidani           #+#    #+#              #
-#    Updated: 2026/04/12 11:52:48 by mhidani          ###   ########.fr        #
+#    Updated: 2026/04/16 10:58:44 by mhidani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= merge
+NAME		= PmergeMe
 SINCE		= 2026.04.12
 AUTHOR		= mhidani
 LOCAL		= 42SP
