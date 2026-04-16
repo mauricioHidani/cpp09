@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mhidani <mhidani@student.42.fr>            +#+  +:+       +#+         #
+#    By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/12 11:45:05 by mhidani           #+#    #+#              #
-#    Updated: 2026/04/12 11:47:25 by mhidani          ###   ########.fr        #
+#    Updated: 2026/04/16 10:44:04 by mhidani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= bitcoinExchange
+NAME		= btc
 SINCE		= 2026.04.12
 AUTHOR		= mhidani
 LOCAL		= 42SP
@@ -33,7 +33,7 @@ MAIN_OBJ	= $(OBJ_DIR)/$(MAIN:.cpp=.o)
 OBJS		= $(SRC_OBJS) $(MAIN_OBJ)
 
 CXX			= c++
-CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 -g
+CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
 CXXINCS		= -I$(INC_DIR) -I$(TPL_DIR)
 
 VALGRIND	= valgrind
