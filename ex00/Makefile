@@ -6,7 +6,7 @@
 #    By: mhidani <mhidani@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/12 11:45:05 by mhidani           #+#    #+#              #
-#    Updated: 2026/04/17 13:22:10 by mhidani          ###   ########.fr        #
+#    Updated: 2026/04/17 13:24:25 by mhidani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,6 +84,7 @@ clean_logs:
 
 fclean: clean
 	@$(call remove_file_exists, $(NAME))
+	@$(call remove_file_exists, test.txt)
 
 re: fclean all
 
