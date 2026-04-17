@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+         #
+#    By: mhidani <mhidani@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/12 11:45:05 by mhidani           #+#    #+#              #
-#    Updated: 2026/04/16 10:56:09 by mhidani          ###   ########.fr        #
+#    Updated: 2026/04/17 16:27:28 by mhidani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,6 @@ SINCE		= 2026.04.12
 AUTHOR		= mhidani
 LOCAL		= 42SP
 VERSION		= 1.0.0v
-
-TIMESTAMP	= $(shell date +%Y%m%d_%H%M%S)
 
 INC_DIR		= includes
 TPL_DIR		= templates
@@ -33,19 +31,17 @@ MAIN_OBJ	= $(OBJ_DIR)/$(MAIN:.cpp=.o)
 OBJS		= $(SRC_OBJS) $(MAIN_OBJ)
 
 CXX			= c++
-CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 -g
+CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
 CXXINCS		= -I$(INC_DIR) -I$(TPL_DIR)
 
 VALGRIND	= valgrind
-VGDLOG		= valgrind_$(TIMESTAMP).log
-VGDFLAGS	= --leak-check=full --track-origins=yes --show-leak-kinds=all \
-			  --log-file=$(VGDLOG)
+VGDFLAGS	= --leak-check=full --track-origins=yes --show-leak-kinds=all
+VGDFLGLG	= --log-file=
 
 MKD			= mkdir
 MKDFLAGS	= --parents
 RM			= rm
 RMFLAGS		= --force --recursive
-ARGS		= 
 
 define check_created
 	if [ -f $(1) ]; then \
@@ -73,6 +69,17 @@ define remove_file_exists
 	fi 
 endef
 
+define run_test
+	$(eval CURRENT_LOG := valgrind_test$(strip $(1))_$(shell date +%Y%m%d_%H%M%S).log)
+	@echo "🚩 Test $(1)"
+	@echo "📥 input> $(2)"
+	@echo -n "📤 output> "
+	@$(VALGRIND) $(VGDFLAGS) $(VGDFLGLG)$(CURRENT_LOG) ./$(NAME) "$(2)" || true
+	@echo "👍 expected> $(3)"
+	@$(call check_created,$(CURRENT_LOG))
+	@echo ""
+endef
+
 all: banner $(NAME)
 
 clean:
@@ -82,7 +89,7 @@ clean_logs:
 	@$(RM) $(RMFLAGS) valgrind_*.log
 	@echo "🟧 valgrind logs is cleaned"
 
-fclean: clean
+fclean: clean_logs clean
 	@$(call remove_file_exists, $(NAME))
 
 re: fclean all
@@ -95,8 +102,15 @@ banner:
 	@echo 
 
 run: banner $(NAME)
-	@$(VALGRIND) $(VGDFLAGS) ./$(NAME) $(ARGS)
-	@$(call check_created, $(VGDLOG))
+	@$(call run_test,1,8 9 * 9 - 9 - 9 - 4 - 1 +,42)
+	@$(call run_test,2,7 7 * 7 -,42)
+	@$(call run_test,3,1 2 * 2 / 2 * 2 4 - +,0)
+	@$(call run_test,4,(1 + 1),Error: invalid input.)
+	@$(call run_test,5,10 1 +,Error: invalid input.)
+	@$(call run_test,6,-2 1 +,Error: invalid input.)
+	@$(call run_test,7,0 1 +,Error: malformed expression.)
+	@$(call run_test,8,9 0 /,Error: division by zero is invalid.)
+	@$(call run_test,9,,Error: no operation was reported.)
 
 $(NAME): $(OBJS)
 	@$(CXX) $(CXXFLAGS) $(OBJS) $(CXXINCS) -o $@
