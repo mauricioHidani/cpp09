@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+         #
+#    By: mhidani <mhidani@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/12 11:45:05 by mhidani           #+#    #+#              #
-#    Updated: 2026/04/16 10:44:04 by mhidani          ###   ########.fr        #
+#    Updated: 2026/04/17 13:22:10 by mhidani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ MAIN_OBJ	= $(OBJ_DIR)/$(MAIN:.cpp=.o)
 OBJS		= $(SRC_OBJS) $(MAIN_OBJ)
 
 CXX			= c++
-CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
+CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 -g
 CXXINCS		= -I$(INC_DIR) -I$(TPL_DIR)
 
 VALGRIND	= valgrind
@@ -95,7 +95,29 @@ banner:
 	@echo 
 
 run: banner $(NAME)
-	@$(VALGRIND) $(VGDFLAGS) ./$(NAME) $(ARGS)
+	@echo "🚩 Run Tests"
+	@echo "date | value"		>> test.txt
+	@echo "2010-12-05 | 0.003"	>> test.txt
+	@echo "2009-01-02 | 0.01"	>> test.txt
+	@echo "2026-04-17 | 0.01"	>> test.txt
+	@echo "-01-01     | 0.01"	>> test.txt
+	@echo "0-01-01    | 0.01"	>> test.txt
+	@echo "2008-09-30 | 1"		>> test.txt
+	@echo "2010--01   | 0.01"	>> test.txt
+	@echo "2010-0-01  | 0.01"	>> test.txt
+	@echo "2010-00-01 | 0.01"	>> test.txt
+	@echo "2010-13-01 | 0.01"	>> test.txt
+	@echo "2010-01-   | 0.01"	>> test.txt
+	@echo "2010-01-0  | 0.01"	>> test.txt
+	@echo "2010-01-00 | 0.01"	>> test.txt
+	@echo "2010-01-35 | 0.01"	>> test.txt
+	@echo "2026-02-29 | 0.01"	>> test.txt
+	@echo "2010-10-22 | "		>> test.txt
+	@echo "2010-10-22 | -0.01"	>> test.txt
+	@echo "2010-10-22 | 1001"	>> test.txt
+	@echo "2010-10-22 | 0"		>> test.txt
+	@echo "2010-10-22 | 1000"	>> test.txt
+	@$(VALGRIND) $(VGDFLAGS) ./$(NAME) test.txt
 	@$(call check_created, $(VGDLOG))
 
 $(NAME): $(OBJS)

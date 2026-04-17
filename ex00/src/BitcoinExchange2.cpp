@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange2.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 15:42:49 by mhidani           #+#    #+#             */
-/*   Updated: 2026/04/16 17:49:22 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/04/17 10:10:37 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void BitcoinExchange::exec(const std::string& infoPath) {
 			std::cerr << "Error: " << e.what() << std::endl;
 		}
 
-		printInfo(std::cout, date, value);
+		displayInfo(std::cout, date, value);
 	}
 }
 
