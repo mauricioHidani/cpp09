@@ -6,7 +6,7 @@
 #    By: mhidani <mhidani@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/12 11:45:05 by mhidani           #+#    #+#              #
-#    Updated: 2026/04/17 16:27:28 by mhidani          ###   ########.fr        #
+#    Updated: 2026/04/20 09:55:19 by mhidani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,6 +102,12 @@ banner:
 	@echo 
 
 run: banner $(NAME)
+	@$(VALGRIND) $(VGDFLAGS) ./$(NAME) $(ARGS)
+	@$(call check_created, $(VGDLOG))
+
+test: banner $(NAME)
+	@echo "🚩 Running the tests"
+	@echo
 	@$(call run_test,1,8 9 * 9 - 9 - 9 - 4 - 1 +,42)
 	@$(call run_test,2,7 7 * 7 -,42)
 	@$(call run_test,3,1 2 * 2 / 2 * 2 4 - +,0)
@@ -124,4 +130,4 @@ $(OBJ_DIR)/main.o: main.cpp
 	@$(MKD) $(MKDFLAGS) $(dir $@)
 	@$(CXX) $(CXXFLAGS) $(CXXINCS) -c $< -o $@
 
-.PHONY: clean clean_logs fclean all re run banner
+.PHONY: clean clean_logs fclean all re run test banner
