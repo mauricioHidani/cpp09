@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.tpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhidani <mhidani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 10:54:07 by mhidani           #+#    #+#             */
-/*   Updated: 2026/04/20 11:55:30 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/04/20 15:21:09 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void PmergeMe::mergeInsertSort(Container& sequence) {
 
 	for (size_t i = 0; (i + 1) < sequence.size(); i += 2) {
 		int lower = sequence[i], higher = sequence[i + 1];
-		if (lower > higher) lower ^= higher ^= lower ^= higher;
+		if (lower > higher) swap(lower, higher);
 		mainChain.push_back(higher);
 		pending.push_back(lower);
 	}

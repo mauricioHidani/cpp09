@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mhidani <mhidani@student.42.fr>            +#+  +:+       +#+         #
+#    By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/12 11:45:05 by mhidani           #+#    #+#              #
-#    Updated: 2026/04/20 09:55:19 by mhidani          ###   ########.fr        #
+#    Updated: 2026/04/20 15:43:44 by mhidani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,10 +72,10 @@ endef
 define run_test
 	$(eval CURRENT_LOG := valgrind_test$(strip $(1))_$(shell date +%Y%m%d_%H%M%S).log)
 	@echo "🚩 Test $(1)"
-	@echo "📥 input> $(2)"
-	@echo -n "📤 output> "
+	@echo "🔻 input> $(2)"
+	@echo -n "🔺 output> "
 	@$(VALGRIND) $(VGDFLAGS) $(VGDFLGLG)$(CURRENT_LOG) ./$(NAME) "$(2)" || true
-	@echo "👍 expected> $(3)"
+	@echo "🔹 expected> $(3)"
 	@$(call check_created,$(CURRENT_LOG))
 	@echo ""
 endef

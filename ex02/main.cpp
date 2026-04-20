@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhidani <mhidani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 18:34:15 by mhidani           #+#    #+#             */
-/*   Updated: 2026/04/20 12:20:25 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/04/20 18:45:32 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool checkSort(const C1& c1, const C2& c2) {
 template<typename Container>
 void displayContainer(std::ostream& out, const std::string& tgt, 
 					  const Container& stl) {
-	out << tgt << ":\t";
+	out << tgt << ": ";
 	for (size_t i = 0; i < stl.size(); i++) {
 		out << stl[i];
 		if (i < stl.size() - 1)
@@ -120,7 +120,7 @@ int main(int argc, char** argv) {
 	std::vector<int>	before;
 	PmergeMe::buildContainer(argv[1], before);
 	displayContainer(std::cout, "Before", before);
-	displayContainer(std::cout, "After", vector);
+	displayContainer(std::cout, "After", deque);
 
 	displayResult(std::cout, vector, vectorTime);
 	displayResult(std::cout, deque, dequeTime);
