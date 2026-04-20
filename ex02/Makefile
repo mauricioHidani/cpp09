@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+         #
+#    By: mhidani <mhidani@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/12 11:45:05 by mhidani           #+#    #+#              #
-#    Updated: 2026/04/16 10:58:44 by mhidani          ###   ########.fr        #
+#    Updated: 2026/04/20 12:18:50 by mhidani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,18 @@ define remove_file_exists
 		echo "🟢 $(1): is cleaned"; \
 	else \
 		echo "🟠 $(1): doesn't exists and not cleaned"; \
-	fi 
+	fi
+endef
+
+define run_test
+	$(eval CURRENT_LOG := valgrind_test$(strip $(1))_$(shell date +%Y%m%d_%H%M%S).log)
+	@echo "🚩 Test $(1)"
+	@echo "📥 input> $(2)"
+	@echo -n "📤 output> "
+	@$(VALGRIND) $(VGDFLAGS) $(VGDFLGLG)$(CURRENT_LOG) ./$(NAME) "$(2)" || true
+	@echo "👍 expected> $(3)"
+	@$(call check_created,$(CURRENT_LOG))
+	@echo ""
 endef
 
 all: banner $(NAME)
@@ -98,6 +109,14 @@ run: banner $(NAME)
 	@$(VALGRIND) $(VGDFLAGS) ./$(NAME) $(ARGS)
 	@$(call check_created, $(VGDLOG))
 
+test: banner $(NAME)
+	@echo "🚩 Running the tests\n"
+	@echo
+	@$(call run_test,1,"3 5 9 7 4","3 4 5 7 9")
+	@$(call run_test,2,"","Error:")
+	@$(call run_test,3,"-1" "2","Error: the input format must be enclosed in double quotes, with positive numbers separated by spaces. ")
+
+
 $(NAME): $(OBJS)
 	@$(CXX) $(CXXFLAGS) $(OBJS) $(CXXINCS) -o $@
 	@echo "🔷 $(NAME): The executable is ready"
@@ -110,4 +129,4 @@ $(OBJ_DIR)/main.o: main.cpp
 	@$(MKD) $(MKDFLAGS) $(dir $@)
 	@$(CXX) $(CXXFLAGS) $(CXXINCS) -c $< -o $@
 
-.PHONY: clean clean_logs fclean all re run banner
+.PHONY: clean clean_logs fclean all re run test banner
