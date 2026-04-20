@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 13:25:26 by mhidani           #+#    #+#             */
-/*   Updated: 2026/04/17 15:45:02 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/04/19 08:57:22 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,6 @@ RPN::~RPN(void) {
 		_store.pop();
 }
 
-void RPN::calcSUM(const std::string& tgt, const int& a, const int& b) {
-	if (tgt != "+")
-		return ;
-	_store.push(a + b);
-}
-
-void RPN::calcSUB(const std::string& tgt, const int& a, const int& b) {
-	if (tgt != "-")
-		return ;
-	_store.push(a - b);
-}
-
-void RPN::calcMUL(const std::string& tgt, const int& a, const int& b) {
-	if (tgt != "*")
-		return ;
-	_store.push(a * b);
-}
-
-void RPN::calcDIV(const std::string& tgt, const int& a, const int& b) {
-	if (tgt != "/")
-		return ;
-	if (b == 0)
-		throw std::runtime_error("division by zero is invalid.");
-	_store.push(a / b);
-}
-
 int RPN::calc(void) {
 	double				a = 0, b = 0;
 	std::string			tkn = std::string("");
@@ -93,4 +67,30 @@ int RPN::calc(void) {
 		throw std::runtime_error("malformed expression.");
 	
 	return _store.top();
+}
+
+void RPN::calcSUM(const std::string& tgt, const int& a, const int& b) {
+	if (tgt != "+")
+		return ;
+	_store.push(a + b);
+}
+
+void RPN::calcSUB(const std::string& tgt, const int& a, const int& b) {
+	if (tgt != "-")
+		return ;
+	_store.push(a - b);
+}
+
+void RPN::calcMUL(const std::string& tgt, const int& a, const int& b) {
+	if (tgt != "*")
+		return ;
+	_store.push(a * b);
+}
+
+void RPN::calcDIV(const std::string& tgt, const int& a, const int& b) {
+	if (tgt != "/")
+		return ;
+	if (b == 0)
+		throw std::runtime_error("division by zero is invalid.");
+	_store.push(a / b);
 }
