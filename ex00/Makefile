@@ -6,7 +6,7 @@
 #    By: mhidani <mhidani@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/12 11:45:05 by mhidani           #+#    #+#              #
-#    Updated: 2026/04/17 16:27:47 by mhidani          ###   ########.fr        #
+#    Updated: 2026/04/20 09:51:27 by mhidani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ MAIN_OBJ	= $(OBJ_DIR)/$(MAIN:.cpp=.o)
 OBJS		= $(SRC_OBJS) $(MAIN_OBJ)
 
 CXX			= c++
-CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 -g
+CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
 CXXINCS		= -I$(INC_DIR) -I$(TPL_DIR)
 
 VALGRIND	= valgrind
