@@ -65,6 +65,31 @@ void PmergeMe::insertWithJacobsthal(Container& mainChain, Container& pending) {
 			mainChain.insert(pos, pending[i]);
 		}
     }
+
+// test
+int pendingSize = static_cast<int>(pending.size());
+    Container jac = buildJacobsthal<Container>(pendingSize);
+
+    // Insere pending[0] primeiro (par do mainChain[0])
+    mainChain.insert(mainChain.begin(), pending[0]);
+
+    int prevJac = 1; // pending[0] já foi inserido
+    for (size_t i = 1; i < jac.size(); i++) {
+        int groupEnd   = std::min(jac[i], pendingSize) - 1; // índice real
+        int groupStart = prevJac; // exclusive
+
+        // Percorre o grupo de trás pra frente
+        for (int idx = groupEnd; idx >= groupStart; idx--) {
+            typename Container::iterator pos = std::lower_bound(
+                mainChain.begin(),
+                mainChain.end(),
+                pending[idx]
+            );
+            mainChain.insert(pos, pending[idx]);
+        }
+        prevJac = jac[i];
+        if (prevJac >= pendingSize) break;
+    }
 }
 
 template<typename Container>
