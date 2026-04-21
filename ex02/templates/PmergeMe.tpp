@@ -79,6 +79,8 @@ Container PmergeMe::buildJacobsthal(int number) {
 		a = b;
 		b = next;
 	}
+ if (sequence.empty() || sequence.back() < number)
+        sequence.push_back(number);
 	return sequence;
 }
 
