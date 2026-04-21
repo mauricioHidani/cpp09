@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 10:54:07 by mhidani           #+#    #+#             */
-/*   Updated: 2026/04/20 15:21:09 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/04/21 10:14:54 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,58 +38,28 @@ void PmergeMe::buildContainer(const std::string& in, Container& stl) {
 
 template<typename Container>
 void PmergeMe::insertWithJacobsthal(Container& mainChain, Container& pending) {
-	int			pendinSize = static_cast<int>(pending.size());
-	Container	jac = buildJacobsthal<Container>(pendinSize);
-	Container	inserted(pendinSize, false);
-	
+	int			pendingSize = static_cast<int>(pending.size());
+	int			prevJac = 0;
+	Container	jac = buildJacobsthal<Container>(pendingSize);
+
 	mainChain.insert(mainChain.begin(), pending[0]);
-	inserted[0] = true;
-	
-	for (size_t i = 0; i < jac.size(); i++) {
-		int idx = jac[i] - 1;
-		if (idx >= pendinSize || inserted[idx]) continue;
+	prevJac = 1;
 
-		typename Container::iterator pos = std::lower_bound(
-			mainChain.begin(), 
-			mainChain.end(), 
-			pending[idx]
-		);
-		mainChain.insert(pos, pending[idx]);
-		inserted[idx] = true;
-	}
+	for (size_t i = 1; i < jac.size(); i++) {
+		int	groupEnd = std::min(jac[i], pendingSize) - 1;
+		int	groupStart = prevJac;
 
-	for (size_t i = 1; i < pending.size(); i++) {
-		if (!inserted[i]) {
-			typename Container::iterator pos =
-			std::lower_bound(mainChain.begin(), mainChain.end(), pending[i]);
-			mainChain.insert(pos, pending[i]);
+		for (int idx = groupEnd; idx >= groupStart; idx--) {
+			typename Container::iterator pos = std::lower_bound(
+				mainChain.begin(),
+				mainChain.end(),
+				pending[idx]
+			);
+			mainChain.insert(pos, pending[idx]);
 		}
-    }
-
-// test
-int pendingSize = static_cast<int>(pending.size());
-    Container jac = buildJacobsthal<Container>(pendingSize);
-
-    // Insere pending[0] primeiro (par do mainChain[0])
-    mainChain.insert(mainChain.begin(), pending[0]);
-
-    int prevJac = 1; // pending[0] já foi inserido
-    for (size_t i = 1; i < jac.size(); i++) {
-        int groupEnd   = std::min(jac[i], pendingSize) - 1; // índice real
-        int groupStart = prevJac; // exclusive
-
-        // Percorre o grupo de trás pra frente
-        for (int idx = groupEnd; idx >= groupStart; idx--) {
-            typename Container::iterator pos = std::lower_bound(
-                mainChain.begin(),
-                mainChain.end(),
-                pending[idx]
-            );
-            mainChain.insert(pos, pending[idx]);
-        }
-        prevJac = jac[i];
-        if (prevJac >= pendingSize) break;
-    }
+		prevJac = jac[i];
+		if (prevJac >= pendingSize) break;
+	}
 }
 
 template<typename Container>
@@ -104,8 +74,8 @@ Container PmergeMe::buildJacobsthal(int number) {
 		a = b;
 		b = next;
 	}
- if (sequence.empty() || sequence.back() < number)
-        sequence.push_back(number);
+	if (sequence.empty() || sequence.back() < number)
+		sequence.push_back(number);
 	return sequence;
 }
 

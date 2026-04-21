@@ -6,7 +6,7 @@
 /*   By: mhidani <mhidani@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 18:34:15 by mhidani           #+#    #+#             */
-/*   Updated: 2026/04/20 18:45:32 by mhidani          ###   ########.fr       */
+/*   Updated: 2026/04/21 11:40:00 by mhidani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ void displayContainer(std::ostream& out, const std::string& tgt,
 		out << stl[i];
 		if (i < stl.size() - 1)
 			out << " ";
+		if (i == 4 && stl.size() > 5) {
+			out << "[...]";
+			break;
+		}
 	}
 	out << std::endl;
 }
